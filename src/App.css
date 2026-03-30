@@ -6,13 +6,15 @@
 
 body {
   color: #333;
+  padding-top: 4rem;
   --type-first: Helvetica, Arial, sans-serif;
   --type-second: "Spectral", Georgia;
   font-family: var(--type-first);
 }
 
-ul {
-  list-style: none;
+ul,
+li {
+  list-style-type: none;
 }
 
 img {
@@ -27,9 +29,12 @@ input {
   font-family: var(--type-first);
   color: #333;
 }
-
 .container {
   max-width: 50rem;
   padding: 0 1rem;
   margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
 }
