@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 const Header = () => {
   return (
     <div className={styles.header}>
-      <nav>
+      <nav className='container'>
         <Link to="/">Home</Link>
       </nav>
     </div>
