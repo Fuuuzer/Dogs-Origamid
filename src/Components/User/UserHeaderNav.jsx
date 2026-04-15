@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router'
+import { NavLink, useNavigate } from 'react-router'
 import { UserContext } from '../../UserContext'
 import styles from './UserHeaderNav.module.css'
 import MinhasFotos from '../../assets/feed.svg?react'
@@ -9,13 +9,32 @@ import Sair from '../../assets/sair.svg?react'
 
 
 const UserHeaderNav = () => {
-  const { userLogout } = React.useContext(UserContext)
+  const navigate = useNavigate();
+  const [mobile, setMobile] = React.useState(null)
+  const { userLogout } = React.useContext(UserContext);
+
+  function handleLogout() {
+    userLogout();
+    navigate('/login')
+  }
+
   return (
     <nav className={styles.nav}>
-      <NavLink to='/conta'><MinhasFotos />Minhas fotos</NavLink>
-      <NavLink to='/conta/estatisticas'><Estatisticas />Estatisticas</NavLink>
-      <NavLink to='/conta/postar'><AdicionarFoto />Adicionar Foto</NavLink>
-      <button onClick={userLogout}><Sair />Sair</button>
+      <NavLink to='/conta' end>
+        <MinhasFotos />
+        {mobile && 'Minhas fotos'}
+      </NavLink>
+      <NavLink to='/conta/estatisticas'>
+        <Estatisticas />
+        {mobile && 'Estatisticas'}
+      </NavLink>
+      <NavLink to='/conta/postar'>
+        <AdicionarFoto />
+        {mobile && 'Adicionar Foto'}
+      </NavLink>
+      <button onClick={handleLogout}><Sair />
+        {mobile && 'Sair'}
+      </button>
     </nav>
   )
 }
