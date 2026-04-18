@@ -1,25 +1,35 @@
-import React from 'react'
-import { NavLink, useNavigate } from 'react-router'
+import React, { use } from 'react'
+import { NavLink, useMatch, useNavigate } from 'react-router'
 import { UserContext } from '../../UserContext'
 import styles from './UserHeaderNav.module.css'
 import MinhasFotos from '../../assets/feed.svg?react'
 import Estatisticas from '../../assets/estatisticas.svg?react'
 import AdicionarFoto from '../../assets/adicionar.svg?react'
 import Sair from '../../assets/sair.svg?react'
+import useMedia from '../../Hooks/useMedia'
 
 
 const UserHeaderNav = () => {
   const navigate = useNavigate();
-  const [mobile, setMobile] = React.useState(null)
   const { userLogout } = React.useContext(UserContext);
+  const mobile = useMedia('(max-width: 40rem)');
+  const [mobileMenu, setMobileMenu] = React.useState(false)
 
   function handleLogout() {
     userLogout();
     navigate('/login')
   }
 
-  return (
-    <nav className={styles.nav}>
+  return (<>
+    {mobile &&
+      <button
+        aria-label='Menu'
+        className={`${styles.mobileButton} ${mobileMenu && styles.mobileButtonActive}`}
+        onClick={() => setMobileMenu(!mobileMenu)}>
+
+      </button>}
+
+    <nav className={`${mobile ? styles.navMobile : styles.nav} ${mobileMenu && styles.navMobileActive}`}>
       <NavLink to='/conta' end>
         <MinhasFotos />
         {mobile && 'Minhas fotos'}
@@ -36,6 +46,7 @@ const UserHeaderNav = () => {
         {mobile && 'Sair'}
       </button>
     </nav>
+  </>
   )
 }
 
